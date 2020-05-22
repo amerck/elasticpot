@@ -15,7 +15,7 @@ ENV ELASTICPOT_VERS "v1.0.2"
 ENV ELASTICPOT_USER "elasticpot"
 ENV ELASTICPOT_GROUP "elasticpot"
 ENV ELASTICPOT_DIR "/opt/elasticpot"
-ENV ELASTICPOT_JSON "/etc/conpot/conpot.json"
+ENV ELASTICPOT_JSON "/etc/elasticpot/elasticpot.json"
 
 RUN mkdir /code
 ADD requirements.txt entrypoint.sh elasticpot.cfg.template /code/
@@ -25,7 +25,6 @@ RUN useradd elasticsearch
 RUN apt-get update \
     && apt-get install -y --no-install-recommends python3-dev libffi-dev build-essential wget jq \
     && pip3 install -r /code/requirements.txt
-
 
 RUN groupadd -r -g 1001 ${ELASTICPOT_GROUP} && \
     useradd -r -u 1001 -m -g ${ELASTICPOT_GROUP} ${ELASTICPOT_USER} && \
@@ -38,6 +37,8 @@ RUN cd /opt && \
 RUN pip3 install -r /opt/elasticpot/requirements.txt
 
 VOLUME /data
-RUN chown ${ELASTICPOT_USER} ${ELASTICPOT_JSON}
+RUN mkdir $(dirname ${ELASTICPOT_JSON}) && \
+    chown ${ELASTICPOT_USER} $(dirname ${ELASTICPOT_JSON})
+
 USER elasticpot
 ENTRYPOINT ["/code/entrypoint.sh"]
