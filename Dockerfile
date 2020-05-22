@@ -38,6 +38,6 @@ RUN cd /opt && \
 RUN pip3 install -r /opt/elasticpot/requirements.txt
 
 VOLUME /data
-
+RUN chown ${ELASTICPOT_USER} ${ELASTICPOT_JSON}
 USER elasticpot
 ENTRYPOINT ["/code/entrypoint.sh"]
