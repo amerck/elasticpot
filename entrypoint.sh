@@ -41,6 +41,7 @@ main () {
     export ELASTICPOT_output_hpfeed__port="${FEEDS_SERVER_PORT:-10000}"
     export ELASTICPOT_output_hpfeed__identifier="${uid}"
     export ELASTICPOT_output_hpfeed__secret="${secret}"
+    export ELASTICPOT_output_hpfeed__tags="${TAGS}"
 
     containedenv-config-writer.py \
       -p ELASTICPOT_ \

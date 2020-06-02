@@ -40,5 +40,8 @@ VOLUME /data
 RUN mkdir $(dirname ${ELASTICPOT_JSON}) && \
     chown ${ELASTICPOT_USER} $(dirname ${ELASTICPOT_JSON})
 
+RUN rm -rf /opt/elasticpot/output_plugins/hpfeed.py
+ADD output/hpfeed.py /opt/elasticpot/output_plugins/hpfeed.py
+
 USER elasticpot
 ENTRYPOINT ["/code/entrypoint.sh"]

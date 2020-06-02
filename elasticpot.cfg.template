@@ -162,6 +162,7 @@ port = 10000
 identifier = abc123
 secret = secret
 channel = elasticpot.events
+tags =
 
 # TODO:
 
