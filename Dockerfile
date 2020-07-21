@@ -11,7 +11,7 @@ LABEL changelog-url "https://github.com/CommunityHoneyNetwork/communityhoneynetw
 
 # Set Docker var - used by Elasticpot init to determine logging
 ENV DOCKER "yes"
-ENV ELASTICPOT_VERS "v1.0.2"
+ENV ELASTICPOT_VERS "v1.0.3"
 ENV ELASTICPOT_USER "elasticpot"
 ENV ELASTICPOT_GROUP "elasticpot"
 ENV ELASTICPOT_DIR "/opt/elasticpot"
