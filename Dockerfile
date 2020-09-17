@@ -16,6 +16,8 @@ ENV ELASTICPOT_USER "elasticpot"
 ENV ELASTICPOT_GROUP "elasticpot"
 ENV ELASTICPOT_DIR "/opt/elasticpot"
 ENV ELASTICPOT_JSON "/etc/elasticpot/elasticpot.json"
+ENV DEBIAN_FRONTEND "noninteractive"
+# hadolint ignore=DL3008,DL3005
 
 RUN mkdir /code
 ADD requirements.txt entrypoint.sh elasticpot.cfg.template /code/
