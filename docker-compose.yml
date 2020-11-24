@@ -1,0 +1,13 @@
+version: '3'
+services:
+  elastipot:
+    build:
+      context: .
+    volumes:
+      - configs:/etc/elastipot
+    ports:
+      - "9200:9200"
+    env_file:
+      - elasticpot.env
+volumes:
+  configs:
