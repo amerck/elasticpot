@@ -1,13 +1,13 @@
 FROM python:3.7
 
-LABEL maintainer "Team Stingar <team.stingar@duke.edu>"
-LABEL name "elasticpot"
-LABEL version "1.9.1"
-LABEL release "1"
-LABEL summary "Elasticpot HoneyPot container"
-LABEL description ""
-LABEL authoritative-source-url "https://github.com/CommunityHoneyNetwork/communityhoneynetwork"
-LABEL changelog-url "https://github.com/CommunityHoneyNetwork/communityhoneynetwork/commits/master"
+LABEL maintainer="Team Stingar <team-stingar@duke.edu>"
+LABEL name="elasticpot"
+LABEL version="1.9.1"
+LABEL release="1"
+LABEL summary="Elasticpot HoneyPot container"
+LABEL description="Honeypot emulating ElasticSearch"
+LABEL authoritative-source-url="https://github.com/CommunityHoneyNetwork/communityhoneynetwork"
+LABEL changelog-url="https://github.com/CommunityHoneyNetwork/communityhoneynetwork/commits/master"
 
 # Set Docker var - used by Elasticpot init to determine logging
 ENV DOCKER "yes"
