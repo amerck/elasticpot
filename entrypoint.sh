@@ -32,7 +32,7 @@ main () {
         -d "${DEPLOY_KEY}" \
         -u "${CHN_SERVER}" -k\
         -o "${ELASTICPOT_JSON}" \
-        -i "${IP_ADDRESS}"
+        -i "${REPORTED_IP}"
 
     local uid="$(cat ${ELASTICPOT_JSON} | jq -r .identifier)"
     local secret="$(cat ${ELASTICPOT_JSON} | jq -r .secret)"
@@ -42,6 +42,7 @@ main () {
     export ELASTICPOT_output_hpfeed__identifier="${uid}"
     export ELASTICPOT_output_hpfeed__secret="${secret}"
     export ELASTICPOT_output_hpfeed__tags="${TAGS}"
+    export ELASTICPOT_output_hpfeed__reported_ip="${REPORTED_IP}"
 
     containedenv-config-writer.py \
       -p ELASTICPOT_ \
