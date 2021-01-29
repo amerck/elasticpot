@@ -34,6 +34,12 @@ class Output(output.Output):
         ident = CONFIG.get('output_hpfeed', 'identifier')
         secret = CONFIG.get('output_hpfeed', 'secret')
 
+        reported_ip = CONFIG.get('output_hpfeed', 'reported_ip')
+        if reported_ip and reported_ip != '':
+            self.reported_ip = reported_ip
+        else:
+            self.reported_ip = None
+
         self.client = ClientSessionService(endpoint, ident, secret)
         self.client.startService()
 
@@ -42,6 +48,8 @@ class Output(output.Output):
 
     def write(self, event):
         event['tags'] = self.tags
+        if self.reported_ip:
+            event['dst_ip'] = self.reported_ip
         if 'payload' in event.keys():
             try:
                 event['payload'] = event['payload'].decode('utf-8')

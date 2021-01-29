@@ -163,6 +163,7 @@ identifier = abc123
 secret = secret
 channel = elasticpot.events
 tags =
+reported_ip =
 
 # TODO:
 
