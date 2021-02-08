@@ -26,7 +26,7 @@ RUN useradd elasticsearch
 
 # hadolint ignore=DL3008,DL3005
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y python3-dev libffi-dev build-essential wget jq rustc \
+    && apt-get install --no-install-recommends -y python3-dev libffi-dev build-essential wget jq rustc cargo\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && python3 -m pip install --upgrade pip setuptools wheel \
@@ -41,7 +41,7 @@ RUN cd /opt && \
     chown -R ${ELASTICPOT_USER}:${ELASTICPOT_USER} elasticpot
 
 RUN python3 -m pip install -r /opt/elasticpot/requirements.txt \
-    && apt-get remove -y rustc build-essential python3-dev \
+    && apt-get remove -y rustc build-essential cargo python3-dev \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
