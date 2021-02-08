@@ -26,7 +26,7 @@ RUN useradd elasticsearch
 
 # hadolint ignore=DL3008,DL3005
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y python3-dev libffi-dev build-essential wget jq \
+    && apt-get install --no-install-recommends -y python3-dev libffi-dev build-essential wget jq rustc \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && python3 -m pip install --upgrade pip setuptools wheel \
@@ -40,7 +40,10 @@ RUN cd /opt && \
     git clone --branch "${ELASTICPOT_VERS}" https://gitlab.com/bontchev/elasticpot.git && \
     chown -R ${ELASTICPOT_USER}:${ELASTICPOT_USER} elasticpot
 
-RUN python3 -m pip install -r /opt/elasticpot/requirements.txt
+RUN python3 -m pip install -r /opt/elasticpot/requirements.txt \
+    && apt-get remove -y rustc build-essential python3-dev \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 VOLUME /data
 RUN mkdir $(dirname ${ELASTICPOT_JSON}) \
