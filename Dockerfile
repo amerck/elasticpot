@@ -23,7 +23,7 @@ RUN mkdir /code
 ADD requirements.txt entrypoint.sh elasticpot.cfg.template /code/
 
 # hadolint ignore=DL3008,DL3005
-RUN apk --update add --no-cache python3-dev libffi-dev build-base wget jq rust gcc git musl-dev python3-dev openssl-dev cargo mysql-client libmysqlclient-dev \
+RUN apk --update add --no-cache python3-dev libffi-dev build-base wget jq rust gcc git musl-dev python3-dev openssl-dev cargo \
     && python3 -m pip install --upgrade pip setuptools wheel \
     && python3 -m pip install -r /code/requirements.txt
 
@@ -36,8 +36,9 @@ RUN cd /opt && \
     git clone --branch "${ELASTICPOT_VERS}" https://gitlab.com/bontchev/elasticpot.git && \
     chown -R ${ELASTICPOT_USER}:${ELASTICPOT_USER} elasticpot
 
-RUN python3 -m pip install -r /opt/elasticpot/requirements.txt \
-    && apk del python3-dev libffi-dev build-base wget jq rust gcc git musl-dev python3-dev openssl-dev cargo mysql-client libmysqlclient-dev \
+RUN sed -i -e 's/mysqlclient/#mysqlclient/' /opt/elasticpot/requirements.txt && \
+    python3 -m pip install -r /opt/elasticpot/requirements.txt \
+    && apk del python3-dev libffi-dev build-base wget jq rust gcc git musl-dev python3-dev openssl-dev cargo  \
     && rm -rf /var/cache/apk/*
 
 VOLUME /data
