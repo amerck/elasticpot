@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.8
 
 LABEL maintainer="Team Stingar <team-stingar@duke.edu>"
 LABEL name="elasticpot"
