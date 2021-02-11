@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:alpine3.13
 
 LABEL maintainer="Team Stingar <team-stingar@duke.edu>"
 LABEL name="elasticpot"
@@ -22,18 +22,14 @@ ENV DEBIAN_FRONTEND "noninteractive"
 RUN mkdir /code
 ADD requirements.txt entrypoint.sh elasticpot.cfg.template /code/
 
-RUN useradd elasticsearch
-
 # hadolint ignore=DL3008,DL3005
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y python3-dev libffi-dev build-essential wget jq rustc cargo\
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
+RUN apk --update add --no-cache python3-dev libffi-dev build-base wget jq rust cargo\
     && python3 -m pip install --upgrade pip setuptools wheel \
     && python3 -m pip install -r /code/requirements.txt
 
-RUN groupadd -r -g 1001 ${ELASTICPOT_GROUP} && \
-    useradd -r -u 1001 -m -g ${ELASTICPOT_GROUP} ${ELASTICPOT_USER} && \
+RUN adduser -S elasticsearch && \
+    addgroup -g 1001 ${ELASTICPOT_GROUP} && \
+    adduser -S -u 1001 -G ${ELASTICPOT_GROUP} ${ELASTICPOT_USER} && \
     chmod +x /code/entrypoint.sh
 
 RUN cd /opt && \
@@ -41,9 +37,8 @@ RUN cd /opt && \
     chown -R ${ELASTICPOT_USER}:${ELASTICPOT_USER} elasticpot
 
 RUN python3 -m pip install -r /opt/elasticpot/requirements.txt \
-    && apt-get remove -y rustc build-essential cargo python3-dev \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+    && apk del rust build-essential cargo python3-dev \
+    && rm -rf /var/cache/apk/*
 
 VOLUME /data
 RUN mkdir $(dirname ${ELASTICPOT_JSON}) \
