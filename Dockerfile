@@ -23,7 +23,7 @@ RUN mkdir /code
 ADD requirements.txt entrypoint.sh elasticpot.cfg.template /code/
 
 # hadolint ignore=DL3008,DL3005
-RUN apk --update add --no-cache python3-dev libffi-dev build-base wget jq rust cargo\
+RUN apk --update add --no-cache python3-dev libffi-dev build-base wget jq rust gcc musl-dev python3-dev openssl-dev cargo \
     && python3 -m pip install --upgrade pip setuptools wheel \
     && python3 -m pip install -r /code/requirements.txt
 
