@@ -38,7 +38,7 @@ RUN cd /opt && \
 
 RUN sed -i -e 's/mysqlclient/#mysqlclient/' /opt/elasticpot/requirements.txt && \
     python3 -m pip install -r /opt/elasticpot/requirements.txt \
-    && apk del python3-dev libffi-dev build-base wget jq rust gcc git musl-dev python3-dev openssl-dev cargo  \
+    && apk del python3-dev libffi-dev build-base wget rust gcc git musl-dev python3-dev openssl-dev cargo  \
     && rm -rf /var/cache/apk/*
 
 VOLUME /data
