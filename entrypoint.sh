@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 trap "exit 130" SIGINT
 trap "exit 137" SIGKILL
